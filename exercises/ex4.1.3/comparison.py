@@ -1,6 +1,24 @@
 import math
+import random
+import time
+# Brute force method
 
 
+def find_max_sublist(list):
+    sum = maxLow = maxHigh = 0
+    maxSum = -math.inf
+    for i in range(len(list)):
+        sum = 0
+    for j in range(i, len(list)):
+        sum = sum + list[j]
+        if(sum > maxSum):
+            maxSum = sum
+            maxLow = i
+            maxHigh = j
+    return (maxSum, maxLow, maxHigh)
+
+
+# Divide and Conquer Method
 def find_max_crossing_subarray(list, low, mid, high):
     left = low
     right = high
@@ -38,6 +56,26 @@ def find_max_subarray(list, low, high):
             return (crossLow, crossHigh, crossSum)
 
 
-list = [4, -6, 3, 57, -8, 34, -67, 37, -91, 5]
-(left, right, sum) = find_max_subarray(list, 0, len(list) - 1)
-print('Sum:', sum, '\nList:', list[left:right+1])
+# Comparison
+numIterations = 1000000
+for inputSize in range(2, 1000):
+    arr = [random.randint(-100, 100) for _ in range(inputSize)]
+
+# Time with brute force method
+start = time.perf_counter()
+for _ in range(numIterations):
+    bf = find_max_sublist(arr)
+bfTime = time.perf_counter() - start
+
+# Time with recursive method
+start = time.perf_counter()
+for _ in range(inputSize):
+    rc = find_max_subarray(arr, 0, len(arr) - 1)
+rcTime = time.perf_counter() - start
+
+print('Recursive:', rcTime, '\nBruteforce:', bfTime)
+
+if bfTime > rcTime:
+    print('Crossover point:', inputSize)
+else:
+    print("Recursive won by a margin:", rcTime - bfTime)
