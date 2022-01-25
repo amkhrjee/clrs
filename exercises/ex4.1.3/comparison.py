@@ -9,12 +9,12 @@ def find_max_sublist(list):
     maxSum = -math.inf
     for i in range(len(list)):
         sum = 0
-    for j in range(i, len(list)):
-        sum = sum + list[j]
-        if(sum > maxSum):
-            maxSum = sum
-            maxLow = i
-            maxHigh = j
+        for j in range(i, len(list)):
+            sum = sum + list[j]
+            if(sum > maxSum):
+                maxSum = sum
+                maxLow = i
+                maxHigh = j
     return (maxSum, maxLow, maxHigh)
 
 
@@ -57,25 +57,29 @@ def find_max_subarray(list, low, high):
 
 
 # Comparison
-numIterations = 1000000
+numIterations = 1000
 for inputSize in range(2, 1000):
     arr = [random.randint(-100, 100) for _ in range(inputSize)]
 
-# Time with brute force method
-start = time.perf_counter()
-for _ in range(numIterations):
-    bf = find_max_sublist(arr)
-bfTime = time.perf_counter() - start
+    # Time with brute force method
+    start = time.perf_counter()
+    for _ in range(numIterations):
+        bf = find_max_sublist(arr)
+    end = time.perf_counter()
+    bfTime = end - start
 
-# Time with recursive method
-start = time.perf_counter()
-for _ in range(inputSize):
-    rc = find_max_subarray(arr, 0, len(arr) - 1)
-rcTime = time.perf_counter() - start
+    # Time with recursive method
+    start = time.perf_counter()
+    for _ in range(inputSize):
+        rc = find_max_subarray(arr, 0, len(arr) - 1)
+    end = time.perf_counter()
+    rcTime = end - start
 
-print('Recursive:', rcTime, '\nBruteforce:', bfTime)
+    # print('Input Size', inputSize, '\nRecursive:',
+    #       rcTime, '\nBruteforce:', bfTime)
 
-if bfTime > rcTime:
-    print('Crossover point:', inputSize)
-else:
-    print("Recursive won by a margin:", rcTime - bfTime)
+    if bfTime > rcTime:
+        print('Crossover Point:', inputSize)
+        break
+    # else:
+    #     print("Bruteforce won by a margin:", rcTime - bfTime)
