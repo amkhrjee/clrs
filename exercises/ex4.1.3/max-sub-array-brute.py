@@ -1,19 +1,23 @@
-sum = maxLow = maxHigh = 0
+import math
 
 
 def find_max_sublist(list):
-    maxSum = -999
+    left = list[0]
+    right = list[len(list) - 1]
+    sum = -math.inf
     for i in range(len(list)):
-        sum = 0
+        tempSum = 0
         for j in range(i, len(list)):
-            sum = sum + list[j]
-            if(sum > maxSum):
-                maxSum = sum
-                maxLow = i
-                maxHigh = j
-    return (maxSum, maxLow, maxHigh)
+            tempSum += list[j]
+            if tempSum > sum:
+                sum = tempSum
+                left = i
+                right = j
+    if sum < 0:
+        sum = 0
+    return (sum, left, right)
 
 
-list = [4, -6, 3, 57, -8, 34, -67, 37, -91, 5]
+list = [-4, -6, -3, -57, -8, -34, -67, -37, -91, -5]
 (sum, low, high) = find_max_sublist(list)
 print('Max sum:', sum, '\nList:', list[low:high+1])

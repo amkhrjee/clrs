@@ -4,8 +4,8 @@ import math
 def find_max_crossing_subarray(list, low, mid, high):
     left = low
     right = high
-    leftSum = -math.inf
-    rightSum = -math.inf
+    leftSum = 0
+    rightSum = 0
     sum = 0
     for i in reversed(range(low, mid)):
         sum += list[i]
@@ -38,6 +38,6 @@ def find_max_subarray(list, low, high):
             return (crossLow, crossHigh, crossSum)
 
 
-list = [4, -6, 3, 57, -8, 34, -67, 37, -91, 5]
+list = [-4, -6, -3, -57, -8, -34, -67, -37, -91, -5]
 (left, right, sum) = find_max_subarray(list, 0, len(list) - 1)
 print('Sum:', sum, '\nList:', list[left:right+1])
